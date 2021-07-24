@@ -1,0 +1,14 @@
+# Material Count: 1
+
+newmtl MaterialBench
+Ns 0
+Ka 0.4 0.4 0.4
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1
+illum 2
+map_Kd Textures/bench_27_Diffuse.jpg
+map_Bump Textures/bench_27_Normal.jpg
+
