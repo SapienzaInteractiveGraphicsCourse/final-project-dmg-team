@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8">
+		<title>Cyber-Fishing</title>
+		<link href="css/style.css" rel="stylesheet">
+	</head>
+    <body>
+        <nav id='Start_Menu'>
+            <ul>
+                <li>
+                    <button id='Play_Button' class='playbtn' onclick="StartPlay()">Play</button>
+                    <h2 id='gameStarted' hidden>false</h2>
+                </li>
+                <li>
+                    <div class='instructions'>
+                        <button id='Instructions_Button' class='instrbtn' onclick="Instructions()">Instructions</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id='instructions_div' class=instructions-content>
+            <p><b>CONTROLS:</b></p>
+            <p>W: Move forward</p>
+            <p>S: Move backward</p>
+            <p>A: Move leftward</p>
+            <p>D: Move rightward</p>
+            <p>E: Equip fishing pole</p>
+            <p>SpaceBar: Catch a fish</p>
+            <p>Mouse: Adjust the view</p>
+            <p><b>GAME:</b></p>
+            <p>- Once equipped the fishing pole, move the robot and try to catch some fish!</p>
+            <p>- When a fish touches the fishing line, try to catch it. If you succeed, +1 point.</p>
+            <p>  Otherwise, -1 point.</p>
+            <p><b>END:</b></p>
+            <p>- You win when the lake is void</p>
+            <p>- You lose when you reach -4 points</p>
+        </div>
+        <script>
+            function StartPlay() {
+                document.getElementById("Start_Menu").style.display = 'none';
+            }
+        </script>
+        <script>
+            function Instructions() {
+                document.getElementById("instructions_div").classList.toggle("show");
+            }
+
+            // Close the dropdown menu if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.instrbtn')) {
+                    var instructions = document.getElementsByClassName("instructions-content");
+                    var i;
+                    for (i = 0; i < instructions.length; i++) {
+                        var openInstructions = instructions[i];
+                        if (openInstructions.classList.contains('show')) {
+                            openInstructions.classList.remove('show');
+                        }
+                    }
+                }
+            } 
+        </script>
+    </body>
+    <script src="./js/initialization.js" type="module"></script>
+    <script src="./js/definitions.js" type="module"></script>
+    <script src="./js/utilities.js" type="module"></script>
+    <script src="./js/draw.js" type="module"></script>
+    <script src="./js/main.js" type="module"></script>
+    <script src="./js/game.js" type="module"></script>
+
+</html>
