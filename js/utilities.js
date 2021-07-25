@@ -58,7 +58,8 @@ function startLoading() {
     modelsLoadManager.onLoad = function() {
         console.log('Loading models complete!');
         modelsLoaded = true;
-        if (audioLoaded && modelsLoaded)
+        //if (audioLoaded && modelsLoaded)
+        if (modelsLoaded)
             MAIN.main(camera, renderer, scene, objects);
     };
     objects = DRAW.drawAll(modelsLoadManager, scene);
