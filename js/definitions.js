@@ -315,6 +315,7 @@ const trees2Path = {
     obj: './objects/trees/Voxel_Tree_2.obj'
 };
 const treesProperties = [
+    // Fixed trees
     {
         position: {x: 10, y: groundThickness / 2, z: -10},
         rotation: {x: 0, y: 0, z: 0},
@@ -356,7 +357,8 @@ const treesProperties = [
         rotation: {x: 0, y: Math.PI/2, z: 0},
         shadows: {cast: true, receive: true},
         path: trees1Path
-    }, // Start new trees
+    },
+    // Randomly positioned trees 
     {
         position: {x: -10, y: groundThickness / 2, z: -21},
         rotation: {x: 0, y: 0, z: 0},
@@ -441,7 +443,7 @@ const treesProperties = [
         shadows: {cast: true, receive: true},
         path: trees1Path
     },
-    {   // Start other new threes
+    {   
         position: {x: -10, y: groundThickness / 2, z: 100},
         rotation: {x: 0, y: 0, z: 0},
         shadows: {cast: true, receive: true},
