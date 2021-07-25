@@ -1,4 +1,7 @@
+import * as MAIN from './main.js'
+import * as DRAW from './draw.js'
 import * as DEF from './definitions.js'
+import * as INIT from './initialization.js'
 import * as THREE from './lib/three.js-master/build/three.module.js';
 import {OBJLoader} from './lib/three.js-master/examples/jsm/loaders/OBJLoader.js';
 import {MTLLoader} from './lib/three.js-master/examples/jsm/loaders/MTLLoader.js';
@@ -18,6 +21,47 @@ function resizeRendererToDisplaySize(renderer) {
     }
     return needResize;
 }
+
+
+// _________________ Loading _________________ //
+
+
+let audioLoaded = false;
+let modelsLoaded = false;
+
+function startLoading() {
+
+    // Load main elements
+    const camera = INIT.initCamera(DEF.cameraProperties);
+    const renderer = INIT.initRenderer();
+    const scene = INIT.initScene(DEF.sceneProperties);
+
+    // Load sounds
+    const audioLoadManager = new THREE.LoadingManager();
+    audioLoadManager.onProgress = function() {
+        console.log("Loading audio...");
+    };
+    audioLoadManager.onLoad = function() {
+        console.log('Loading audio complete!');
+        audioLoaded = true;
+    };
+    INIT.initAudio(audioLoadManager, camera, DEF.audioProperties.path);
+
+    // Load Models
+    let objects;
+    const modelsLoadManager = new THREE.LoadingManager();
+    modelsLoadManager.onProgress = function() {
+        console.log("Loading models...");
+    };
+    modelsLoadManager.onLoad = function() {
+        console.log('Loading models complete!');
+        modelsLoaded = true;
+        if (audioLoaded && modelsLoaded)
+            MAIN.main(camera, renderer, scene, objects);
+    };
+    objects = DRAW.drawAll(modelsLoadManager, scene);
+}
+startLoading();
 
 // _________________ Meshes _________________ //    
 
@@ -47,13 +91,6 @@ function getMaterial(material_type, textureProperties) {
             material = new THREE.LineBasicMaterial({color:textureProperties.color});
             break;
     };
-    /*if (textureProperties.map != null)
-        if (textureProperties.normalMap != null) {
-            const loader = new THREE.TextureLoader();
-            const normalMap = loader.load(textureProperties.normalMap);
-            material.normalMap = normalMap;
-            material.needsUpdate = true;    
-        }*/
     return material 
 }
 
@@ -116,12 +153,12 @@ function createLine(lineProperties) {
     return line
 }
 
-function createObject(objProperties) {
+function createObject(LoadingManager, objProperties) {
     let object = new THREE.Object3D();
     const mtlLoader = new MTLLoader();
     mtlLoader.load(objProperties.path.mtl, (mtl) => {
         mtl.preload();
-        const objLoader = new OBJLoader();
+        const objLoader = new OBJLoader(LoadingManager);
         objLoader.setMaterials(mtl);
         objLoader.load(objProperties.path.obj, (root) => {
             if (DEF.shadowsOn) {
