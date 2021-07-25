@@ -6,12 +6,12 @@ import {OrbitControls} from './lib/three.js-master/examples/jsm/controls/OrbitCo
 import TWEEN from './lib/tween.esm.js'
 
 
-function initAudio(camera, audio_path) {
+function initAudio(manager, camera, audio_path) {
     const audioListener = new THREE.AudioListener();
     camera.add(audioListener);
 
     const sound = new THREE.Audio(audioListener);
-    const audioLoader = new THREE.AudioLoader();
+    const audioLoader = new THREE.AudioLoader(manager);
     audioLoader.load(audio_path, function(buffer) {
         sound.setBuffer(buffer);
         sound.setLoop(true);
