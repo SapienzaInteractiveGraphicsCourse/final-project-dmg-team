@@ -1415,7 +1415,7 @@ const natureProperties = {
 
 export {
     shadowsOn, skyColor, groundThickness, groundColor,
-    sceneProperties, audioProperties, cameraProperties,
+    sceneProperties, cameraProperties,
     sunProperties, lightsProperties,
     fieldProperties,
     treesProperties,
