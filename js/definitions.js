@@ -110,8 +110,8 @@ const lightsProperties = {
 
 /* ------------------ Field ------------------ */
 
-const fieldMap = './lib/three.js-master/examples/textures/terrain/grasslight-big.jpg';
-const fieldNormalMap = './lib/three.js-master/examples/textures/terrain/grasslight-big-nm.jpg';
+const fieldMap = './js/lib/three.js-master/examples/textures/terrain/grasslight-big.jpg';
+const fieldNormalMap = './js/lib/three.js-master/examples/textures/terrain/grasslight-big-nm.jpg';
 const fieldProperties = {
     meshes: {
         boxes: {
