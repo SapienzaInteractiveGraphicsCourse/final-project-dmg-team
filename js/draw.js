@@ -26,7 +26,7 @@ function drawAll(LoadingManager, scene) {
     }
 }
 
-function drawTrees(LoadingManager, scene, treesProperties) {                // FIND A WAY TO MAKE INSTANCES INSTEAD OF CREATE DIFFERENT OBJECTS
+function drawTrees(LoadingManager, scene, treesProperties) {                
     const trees = [];
     treesProperties.forEach(treeProperties => {
         const tree = UTILS.createObject(LoadingManager, treeProperties);
