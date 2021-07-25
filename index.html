@@ -26,6 +26,9 @@
                 </li>
             </ul>
         </nav>
+        <div id='sound_div' class=sound-menu>
+            <button id='Sound_On' class='soundbtn' onclick="soundOn()">Sound On</button>
+        </div>
         <div id='score_div' class=score-menu>
             <p>score</p>
             <h2 id='score'>0</h2>
@@ -87,15 +90,21 @@
         </script>
     </body>
     <script>
+        function soundOn() {
+            const soundPlayer = new Audio('./sounds/nature_audio2.wav');
+            soundPlayer.play();
+        }
+    </script>
+    <script>
         document.getElementById("End_Menu").style.display = 'none';
         document.getElementById("lose_div").style.display = 'none';
         document.getElementById("win_div").style.display = 'none';
     </script>
-    <script src="js/initialization.js" type="module"></script>
-    <script src="js/definitions.js" type="module"></script>
-    <script src="js/utilities.js" type="module"></script>
-    <script src="js/draw.js" type="module"></script>
-    <script src="js/main.js" type="module"></script>
-    <script src="js/game.js" type="module"></script>
+    <script src="./js/initialization.js" type="module"></script>
+    <script src="./js/definitions.js" type="module"></script>
+    <script src="./js/utilities.js" type="module"></script>
+    <script src="./js/draw.js" type="module"></script>
+    <script src="./js/game.js" type="module"></script>
+    <script src="./js/main.js" type="module"></script>
 
 </html>
