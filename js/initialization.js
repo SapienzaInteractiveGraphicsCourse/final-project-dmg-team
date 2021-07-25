@@ -127,6 +127,7 @@ function initRobotTweens(robot) {
 function initKeyListener(scene, camera, renderer, objects) {
     let robotTweens = initRobotTweens(objects.robot);
     let fishingPoleTweens = initFishingPoleTweens(objects.fishingPole);
+    let copiedFishes = [...objects.fishes];  // Needed to restore the state
     let objectsTweens = {
         robot: robotTweens,
         fishingPole: fishingPoleTweens
@@ -170,7 +171,7 @@ function initKeyListener(scene, camera, renderer, objects) {
         }
     };
     document.onkeydown = function(key) {
-        GAME.play(scene, camera, renderer, key, objects, objectsTweens, constraintsReached);
+        GAME.play(scene, camera, renderer, key, objects, copiedFishes, objectsTweens, constraintsReached);
     };
     document.onkeyup = function() {
         Object.keys(objectsTweens.robot.movement).forEach(function(dirTween) {
