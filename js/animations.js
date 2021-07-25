@@ -233,8 +233,8 @@ function robotCatchFishAnimation(robot, fishingPole, fishes, catchTweens, constr
 
     let taken = false;
     fishes.forEach(fish => {
-        if (Math.abs(fish.position.x - floatingPosition.x) < 5 &&
-            Math.abs(fish.position.z - floatingPosition.z) < 5) {
+        if (Math.abs(fish.position.x - floatingPosition.x) < 8 &&
+            Math.abs(fish.position.z - floatingPosition.z) < 8) {
                 taken = true;
                 console.log("GOOD JOB! FISH TAKEN +1 points");
                 fishCatched = fish;
