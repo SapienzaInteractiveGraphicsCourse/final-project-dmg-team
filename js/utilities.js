@@ -44,6 +44,8 @@ function startLoading() {
     audioLoadManager.onLoad = function() {
         console.log('Loading audio complete!');
         audioLoaded = true;
+        if (audioLoaded && modelsLoaded)
+            MAIN.main(camera, renderer, scene, objects);
     };
     INIT.initAudio(audioLoadManager, camera, DEF.audioProperties.path);
 
