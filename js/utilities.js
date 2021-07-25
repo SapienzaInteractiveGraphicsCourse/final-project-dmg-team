@@ -26,7 +26,6 @@ function resizeRendererToDisplaySize(renderer) {
 // _________________ Loading _________________ //
 
 
-let audioLoaded = false;
 let modelsLoaded = false;
 
 function startLoading() {
@@ -35,19 +34,6 @@ function startLoading() {
     const camera = INIT.initCamera(DEF.cameraProperties);
     const renderer = INIT.initRenderer();
     const scene = INIT.initScene(DEF.sceneProperties);
-
-    // Load sounds
-    /*const audioLoadManager = new THREE.LoadingManager();
-    audioLoadManager.onProgress = function() {
-        console.log("Loading audio...");
-    };
-    audioLoadManager.onLoad = function() {
-        console.log('Loading audio complete!');
-        audioLoaded = true;
-        if (audioLoaded && modelsLoaded)
-            MAIN.main(camera, renderer, scene, objects);
-    };
-    INIT.initAudio(audioLoadManager, camera, DEF.audioProperties.path);*/
 
     // Load Models
     let objects;
@@ -58,7 +44,6 @@ function startLoading() {
     modelsLoadManager.onLoad = function() {
         console.log('Loading models complete!');
         modelsLoaded = true;
-        //if (audioLoaded && modelsLoaded)
         if (modelsLoaded)
             MAIN.main(camera, renderer, scene, objects);
     };
