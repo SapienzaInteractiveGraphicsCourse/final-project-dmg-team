@@ -2,8 +2,12 @@
 import * as ANIMA from './animations.js'
 import * as INIT from './initialization.js'
 
+// Global variables
+let equipped = false;
+let fishesTaken = 0;
+let points = 0;
 
-function restartPlay(scene, camera, renderer, objects) {
+function restartPlay(scene, camera, renderer, objects, copiedFishes) {
     points = 0;
     if (fishesTaken > 0) {  // Reload fishes
         for (var i=0; i<objects.fishes.length; i++) {
@@ -14,21 +18,18 @@ function restartPlay(scene, camera, renderer, objects) {
         }
     }
     fishesTaken = 0;
+    copiedFishes = [...objects.fishes];
     document.getElementById("gameStarted").innerHTML = 'false';
     document.getElementById("End_Menu").style.display = 'block';
     INIT.initRestartListener(camera, renderer);
 }
 
-
-let equipped = false;
-let fishesTaken = 0;
-let points = 0;
-function play(scene, camera, renderer, key, objects, objectsTweens, constraintsReached) {
+function play(scene, camera, renderer, key, objects, copiedFishes, objectsTweens, constraintsReached) {
 
     // Get the main objects of the scene
     const robot = objects.robot;
     const fishingPole = objects.fishingPole;
-    const fishes = objects.fishes;
+    const originalFishes = objects.fishes;
     const robotTweens = objectsTweens.robot.movement;
     const catchTweens = objectsTweens.robot.catch;
     const fishingPoleTweens = objectsTweens.fishingPole;
@@ -98,15 +99,19 @@ function play(scene, camera, renderer, key, objects, objectsTweens, constraintsR
                 }
                 break;
             case 'Space':
-                //robotTweens.catchTweens.forward.start();
                 if (equipped) {
                     catchTweens.backward.start();
-                    const fish = ANIMA.robotCatchFishAnimation(robot, fishingPole, fishes, catchTweens, constraintsReached);
+                    const fish = ANIMA.robotCatchFishAnimation(robot, fishingPole, copiedFishes, catchTweens, constraintsReached);
                     if (fish != null) {
-                        scene.remove(scene.getObjectByName(fish.name));     
+                        scene.remove(scene.getObjectByName(fish.name));
+                        for (let i=0; i<copiedFishes.length; i++) {
+                            if (copiedFishes[i].name == fish.name) {
+                                copiedFishes.splice(i, 1);
+                            }
+                        }
                         fishesTaken += 1;
                         points += 1;
-                        if (fishesTaken == fishes.length) {
+                        if (fishesTaken == originalFishes.length) {
                             console.log("YOU WIN");
                             document.getElementById("win_div").style.display = 'block';
                             restartPlay(scene, camera, renderer, objects);
