@@ -37,7 +37,7 @@ function startLoading() {
     const scene = INIT.initScene(DEF.sceneProperties);
 
     // Load sounds
-    const audioLoadManager = new THREE.LoadingManager();
+    /*const audioLoadManager = new THREE.LoadingManager();
     audioLoadManager.onProgress = function() {
         console.log("Loading audio...");
     };
@@ -47,7 +47,7 @@ function startLoading() {
         if (audioLoaded && modelsLoaded)
             MAIN.main(camera, renderer, scene, objects);
     };
-    INIT.initAudio(audioLoadManager, camera, DEF.audioProperties.path);
+    INIT.initAudio(audioLoadManager, camera, DEF.audioProperties.path);*/
 
     // Load Models
     let objects;
