@@ -16,6 +16,7 @@ function main() {
     const lights = INIT.initLights(scene, DEF.lightsProperties);
     const cameraControls = INIT.initCameraControls(camera, renderer, DEF.cameraProperties.target);
     const playListener = INIT.initPlayListener(camera, renderer, cameraControls);
+    const audioLoader = INIT.initAudio(camera, DEF.audioProperties.path);
 
     //
     // Meshes drawing
