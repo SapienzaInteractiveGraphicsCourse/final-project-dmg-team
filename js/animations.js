@@ -92,8 +92,6 @@ const newCameraProperties = {
     }
 }
 function startCameraAnimation(camera, renderer) {
-    const soundPlayer = new Audio(DEF.audioProperties.path);
-    soundPlayer.play();
     document.getElementById("End_Menu").style.display = 'none';
     document.getElementById("lose_div").style.display = 'none';
     document.getElementById("win_div").style.display = 'none';
