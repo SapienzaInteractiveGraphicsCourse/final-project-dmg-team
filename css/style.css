@@ -11,6 +11,7 @@ canvas {
   display: block;
 }
 
+/*              Navigation menu              */
 nav {
   position: absolute;
   left: 70em;
@@ -51,19 +52,56 @@ nav ul li button:hover {
   color: rgba(255, 253, 253, 0.7);
 }
 
-.instructions {
-  position: relative;
-  display: inline-block;
+/*              Score div              */
+.score-menu {
+  padding: 5px;
+  position: absolute;
+  top: 10%;
+  left: 95%;
+  margin-top: -50px;
+  margin-left: -50px;
+  align-items: center;
+  font-family: "Roboto";
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  display: block;
+  background-color: #f1f1f11f;
+  width: 50px;
+  height: 30px;
+
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
 }
 
+.score-menu h2 {
+  color: rgba(0, 153, 255, 0.472);
+  padding: 1px 20px;
+  font-size: 20px;
+  text-decoration: none;
+  display: block;
+}
+
+.score-menu p {
+  margin: 0 0px 0px 0px;
+  color: rgba(0, 110, 255, 0.445);
+  padding: 1px 1px;
+  text-decoration: none;
+  display: block;
+}
+
+
+/*              Instructions div              */
 .instructions-content {
   padding: 20px;
   position: absolute;
-  left: 75em;
-  top: 1em;
+  top: 6%;
+  left: 65%;
+  margin-top: -50px;
+  margin-left: -50px;
   align-items: center;
   font-family: "Roboto";
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.89);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
   display: none;
   background-color: #f1f1f194;
@@ -82,3 +120,61 @@ nav ul li button:hover {
 }
 
 .show {display:block;} 
+
+
+/*              Result div              */
+.lose-menu {
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  align-items: center;
+  font-family: "Roboto";
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  display: none;
+  background-color: #f1f1f194;
+  width: 300px;
+  height: 350px;
+
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.lose-menu p {
+  color: rgba(255, 0, 0, 0.767);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.win-menu {
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  align-items: center;
+  font-family: "Roboto";
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  display: none;
+  background-color: #f1f1f194;
+  width: 300px;
+  height: 350px;
+
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.win-menu p {
+  color: rgb(60, 163, 0);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
