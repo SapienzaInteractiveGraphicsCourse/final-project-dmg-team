@@ -1,8 +1,8 @@
 "use strict";
 import * as UTILS from './utilities.js'
-import * as THREE from '../three.js-master/build/three.module.js';
+import * as THREE from './lib/three.js-master/build/three.module.js';
 import * as ANIMA from './animations.js'
-import {Water} from '../three.js-master/examples/jsm/objects/Water2.js';
+import {Water} from './lib/three.js-master/examples/jsm/objects/Water2.js';
 
 
 function drawTrees(scene, treesProperties) {                // FIND A WAY TO MAKE INSTANCES INSTEAD OF CREATE DIFFERENT OBJECTS
@@ -37,12 +37,14 @@ function drawRocks(scene, rocksProperties) {
 
 function drawFishes(scene, fishesProperties) {
     const fishes = [];
-    fishesProperties.forEach(fishProperties => {
-        const fish = UTILS.createObject(fishProperties);
+    for (let i=0; i<fishesProperties.length; i++) {
+        const fish = UTILS.createObject(fishesProperties[i]);
+        const name = 'fish' + i.toString();
+        fish.name = name;
         fishes.push(fish);
         scene.add(fish);
-        ANIMA.fishAnimation(fish, fishProperties);
-    });
+        ANIMA.fishAnimation(fish, fishesProperties[i]);
+    };
     return fishes
 }
     
