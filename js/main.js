@@ -41,7 +41,7 @@ function main() {
     //
     // Set the listener for the robot animation
     // 
-    const keyListener = INIT.initKeyListener(scene, objects);
+    const keyListener = INIT.initKeyListener(scene, camera, renderer, objects);
 
     //
     // Render
