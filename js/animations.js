@@ -1,10 +1,80 @@
 import TWEEN from './lib/tween.esm.js'
 import * as DEF from './definitions.js'
-import * as ANIMA from './animations.js'
 import * as INIT from './initialization.js'
-import * as THREE from '../three.js-master/build/three.module.js';
-import { createMesh } from './utilities.js';
+import * as THREE from './lib/three.js-master/build/three.module.js';
 
+
+// _________________ Generic _________________ //
+
+
+function rotateChild(object, axis, name, rotationObject) {
+    object.traverse(function(child) {
+        if (child.name == name) {
+            if (axis =='x') 
+                child.rotation.x = rotationObject.x
+            else if (axis == 'y')
+                child.rotation.y = rotationObject.y
+            else if (axis == 'z')
+                child.rotation.z = rotationObject.z
+        }
+    });
+}
+
+function scaleChild(object, axis, name, scaleObject, original_lenght=null, child_to_unscale=null) {
+    object.traverse(function(child) {
+        if (child.name == name) {
+            if (axis == 'x') {
+                child.scale.x = scaleObject.x;
+                child.position.x = child.position.x*(1 - scaleObject.x);
+            }
+            else if (axis == 'y') {             
+                child.scale.y = scaleObject.y;
+                child.position.set(0, 0, 0);
+                child.position.y -= original_lenght*scaleObject.y / 2;
+            }
+            else if (axis == 'z') {
+                child.scale.z = scaleObject.z;
+                child.position.z = child.position.z*(1 - scaleObject.z);
+            }
+            if (child_to_unscale != null) {
+                child.traverse(function(nephew) {
+                    if (nephew.name == child_to_unscale) {
+                        if (axis == 'x')
+                            nephew.scale.x = 1/scaleObject.x
+                        else if (axis == 'y')
+                            nephew.scale.y = 1/scaleObject.y
+                        else if (axis == 'z')
+                            nephew.scale.z = 1/scaleObject.z
+                    }
+                });
+            }
+        }
+    });
+}
+
+function checkBorder(fishingPole, waterProperties, side=null) {
+    let borderReached = false;
+    let jointPosition = new THREE.Vector3();
+    fishingPole.traverse(function(child) {
+        if (child.name == 'fishLineJoint')
+            child.getWorldPosition(jointPosition);
+    });
+    const borderPosition = waterProperties.position.x - waterProperties.size.width / 2;
+
+    const backCondition = jointPosition.x < borderPosition + 10;
+    if (side == null) {
+        if (backCondition) borderReached = true;
+    }
+    else if (side == 'left') {
+        if (backCondition && (jointPosition.z < 0)) {
+            borderReached = true;
+        }
+    }
+    else if (side == 'right') {
+        if (backCondition && (jointPosition.z > 0)) borderReached = true;
+    }
+    return borderReached
+}
 
 // _________________ Camera _________________ //
 
@@ -22,6 +92,9 @@ const newCameraProperties = {
     }
 }
 function startCameraAnimation(camera, renderer) {
+    document.getElementById("End_Menu").style.display = 'none';
+    document.getElementById("lose_div").style.display = 'none';
+    document.getElementById("win_div").style.display = 'none';
     const cameraPositionTween = new TWEEN.Tween(camera.position).to(newCameraProperties.position, 3000);
     const cameraTargetTween = new TWEEN.Tween(DEF.cameraProperties.target).to(newCameraProperties.target, 3000);
     const newCameraControls = INIT.initCameraControls(camera, renderer, DEF.cameraProperties.target);
@@ -91,6 +164,36 @@ function fishAnimation(fish) {
     return fishTarget
 }
 
+// ______________ Fishing Pole ______________ //
+
+
+function fishingPoleMoveForwardAnimation(fishingPole, forwardTweens, constraintsReached) {
+    const fishLineLenght = DEF.fishingPoleProperties.fishline.main.size.height;
+    // Move
+    forwardTweens.move.onUpdate(function(object) {
+        if (!constraintsReached.forward.fishingPole)
+            rotateChild(fishingPole, 'z', 'fishLineJoint', object);
+    }).onComplete(() => {constraintsReached.forward.fishingPole = true;});
+    // Scale
+    forwardTweens.scale.onUpdate(function(object) {
+        if (!constraintsReached.forward.fishingPole)
+            scaleChild(fishingPole, 'y', 'fishLineMain', object, fishLineLenght, 'floating');
+    }).onComplete(() => {constraintsReached.forward.fishingPole = true;});
+}
+function fishingPoleMoveBackwardAnimation(fishingPole, backwardTweens, constraintsReached) {
+    const fishLineLenght = DEF.fishingPoleProperties.fishline.main.size.height;
+    // Move
+    backwardTweens.move.onUpdate(function(object) {
+        if (!constraintsReached.backward.fishingPole)
+            rotateChild(fishingPole, 'z', 'fishLineJoint', object);
+    }).onComplete(() => {constraintsReached.backward.fishingPole = true;});
+    // Scale
+    backwardTweens.scale.onUpdate(function(object) {
+        if (!constraintsReached.backward.fishingPole)
+            scaleChild(fishingPole, 'y', 'fishLineMain', object, fishLineLenght, 'floating');
+    }).onComplete(() => {constraintsReached.backward.fishingPole = true;});
+}
+
 // __________________ Robot __________________ //
 
 
@@ -111,47 +214,117 @@ function equipFishingPoleAnimation(scene, robot, fishingPole) {
     });
 }
 
-function rotateChild(robot, axis, name, rotationObject) {
-    robot.traverse(function(child) {
-        if (child.name == name) {
-            if (axis =='x') 
-                child.rotation.x = rotationObject.x
-            else if (axis == 'y')
-                child.rotation.y = rotationObject.y
-            else if (axis == 'z')
-                child.rotation.z = rotationObject.z
-        }
+function robotCatchFishAnimation(robot, fishingPole, fishes, catchTweens, constraintsReached) {
+    let fishCatched;
+    let floatingPosition = new THREE.Vector3();
+    fishingPole.traverse(function(child) {
+        if (child.name == 'floating')
+            child.getWorldPosition(floatingPosition);
     });
+
+    catchTweens.backward.onUpdate(function(object) {
+        rotateChild(robot, 'x', 'joint_elbow', object);
+    }).onComplete(() => {
+        catchTweens.forward.start();
+        catchTweens.forward.onUpdate(function(object) {
+            rotateChild(robot, 'x', 'joint_elbow', object);
+        });
+    });
+
+    let taken = false;
+    fishes.forEach(fish => {
+        if (Math.abs(fish.position.x - floatingPosition.x) < 5 &&
+            Math.abs(fish.position.z - floatingPosition.z) < 5) {
+                taken = true;
+                console.log("GOOD JOB! FISH TAKEN +1 points");
+                fishCatched = fish;
+            }
+    });
+
+    if (!taken) {
+        fishCatched = null;
+        console.log("BAD CATCH. -1 points");
+    }
+        
+    return fishCatched
 }
 
-function moveForwardAnimation(robot, forwardTweens, constraintsReached) {
-    const forwardTween = forwardTweens.ankle;
-    forwardTween.onUpdate(function(object) {
+function robotMoveForwardAnimation(robot, forwardTweens, constraintsReached) {
+    // Main movement 
+    forwardTweens.ankle.onUpdate(function(object) {
         rotateChild(robot, 'z', 'joint_ankle', object);
     }).onComplete(() => {constraintsReached.forward.ankle = true;});
-    return forwardTween
+
+    // Secondary movements
+    forwardTweens.knee.onUpdate(function(object) {
+        if (!constraintsReached.forward.knee)
+            rotateChild(robot, 'z', 'joint_knee', object);
+    }).onComplete(() => {constraintsReached.forward.knee = true;});
+    forwardTweens.hip.onUpdate(function(object) {
+        if (!constraintsReached.forward.hip)
+            rotateChild(robot, 'z', 'joint_hip', object);
+    }).onComplete(() => {constraintsReached.forward.hip = true;});
+    forwardTweens.neck.onUpdate(function(object) {
+        if (!constraintsReached.forward.neck)
+            rotateChild(robot, 'z', 'joint_neck', object);
+    }).onComplete(() => {constraintsReached.forward.neck = true;});
+    forwardTweens.shoulder.onUpdate(function(object) {
+        if (!constraintsReached.forward.shoulder)
+            rotateChild(robot, 'y', 'joint_shoulder', object);
+    }).onComplete(() => {constraintsReached.forward.shoulder = true;});
+
+    return forwardTweens
 }
 
-function moveBackwardAnimation(robot, backwardTweens, constraintsReached) {
-    const backwardTween = backwardTweens.ankle;
-    backwardTween.onUpdate(function(object) {
-        rotateChild(robot, 'z', 'joint_ankle', object);
-    }).onComplete(() => {constraintsReached.backward.ankle = true;});
-    return backwardTween
+function robotMoveBackwardAnimation(robot, fishingPole, backwardTweens, constraintsReached) {
+    // Check if the border has been reached
+    const borderReached = checkBorder(fishingPole, DEF.fieldProperties.water);
+
+    if (!borderReached) {
+        // Main movement
+        backwardTweens.ankle.onUpdate(function(object) {
+            if (!constraintsReached.backward.ankle)
+                rotateChild(robot, 'z', 'joint_ankle', object);
+        }).onComplete(() => {constraintsReached.backward.ankle = true;});
+
+        // Secondary movement
+        backwardTweens.knee.onUpdate(function(object) {
+            if (!constraintsReached.backward.knee)
+                rotateChild(robot, 'z', 'joint_knee', object);
+        }).onComplete(() => {constraintsReached.backward.knee = true;});
+        backwardTweens.hip.onUpdate(function(object) {
+            if (!constraintsReached.backward.hip)
+                rotateChild(robot, 'z', 'joint_hip', object);
+        }).onComplete(() => {constraintsReached.backward.hip = true;});
+        backwardTweens.neck.onUpdate(function(object) {
+            if (!constraintsReached.backward.neck)
+                rotateChild(robot, 'z', 'joint_neck', object);
+        }).onComplete(() => {constraintsReached.backward.neck = true;});
+        backwardTweens.shoulder.onUpdate(function(object) {
+            if (!constraintsReached.backward.shoulder)
+                rotateChild(robot, 'y', 'joint_shoulder', object);
+        }).onComplete(() => {constraintsReached.backward.shoulder = true;});
+    }
+
+    return backwardTweens
 }
 
-function moveLeftwardAnimation(robot, leftwardTweens, constraintsReached) {
+function robotMoveLeftwardAnimation(robot, fishingPole, leftwardTweens, constraintsReached) {
     const leftwardTween = leftwardTweens.ankle;
     leftwardTween.onUpdate(function(object) {
-        rotateChild(robot, 'y', 'joint_ankle', object);
+        const borderReached = checkBorder(fishingPole, DEF.fieldProperties.water, 'left');
+        if (!borderReached)
+            rotateChild(robot, 'y', 'joint_ankle', object);
     }).onComplete(() => {constraintsReached.leftward.ankle = true;});
     return leftwardTween
 }
 
-function moveRightwardAnimation(robot, rightwardTweens, constraintsReached) {
+function robotMoveRightwardAnimation(robot, fishingPole, rightwardTweens, constraintsReached) {
     const rightwardTween = rightwardTweens.ankle;
     rightwardTween.onUpdate(function(object) {
-        rotateChild(robot, 'y', 'joint_ankle', object);
+        const borderReached = checkBorder(fishingPole, DEF.fieldProperties.water, 'right');
+        if (!borderReached)
+            rotateChild(robot, 'y', 'joint_ankle', object);
     }).onComplete(() => {constraintsReached.rightward.ankle = true;});
     return rightwardTween
 }
@@ -160,4 +333,5 @@ function moveRightwardAnimation(robot, rightwardTweens, constraintsReached) {
 export {startCameraAnimation, 
         fishAnimation, 
         equipFishingPoleAnimation,
-        moveForwardAnimation, moveBackwardAnimation, moveLeftwardAnimation, moveRightwardAnimation}
+        fishingPoleMoveForwardAnimation, fishingPoleMoveBackwardAnimation,
+        robotCatchFishAnimation, robotMoveForwardAnimation, robotMoveBackwardAnimation, robotMoveLeftwardAnimation, robotMoveRightwardAnimation}
