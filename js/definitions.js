@@ -356,6 +356,174 @@ const treesProperties = [
         rotation: {x: 0, y: Math.PI/2, z: 0},
         shadows: {cast: true, receive: true},
         path: trees1Path
+    }, // Start new trees
+    {
+        position: {x: -10, y: groundThickness / 2, z: -21},
+        rotation: {x: 0, y: 0, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -100, y: groundThickness / 2, z: -30},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: 0, y: groundThickness / 2, z: 40},
+        rotation: {x: 0, y: Math.PI, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -50, y: groundThickness / 2, z: 60},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -20, y: groundThickness / 2, z: 100},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -150, y: groundThickness / 2, z: 104},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -170, y: groundThickness / 2, z: -80},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -10, y: groundThickness / 2, z: -20},
+        rotation: {x: 0, y: 0, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -30, y: groundThickness / 2, z: 110},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -80, y: groundThickness / 2, z: 10},
+        rotation: {x: 0, y: Math.PI, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -11, y: groundThickness / 2, z: 67},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -99, y: groundThickness / 2, z: 42},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -65, y: groundThickness / 2, z: -1},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -125, y: groundThickness / 2, z: 5},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {   // Start other new threes
+        position: {x: -10, y: groundThickness / 2, z: 100},
+        rotation: {x: 0, y: 0, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -158, y: groundThickness / 2, z: 120},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -44, y: groundThickness / 2, z: 80},
+        rotation: {x: 0, y: Math.PI, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -150, y: groundThickness / 2, z: 70},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -170, y: groundThickness / 2, z: -100},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -180, y: groundThickness / 2, z: -104},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -78, y: groundThickness / 2, z: -41},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -30, y: groundThickness / 2, z: -37},
+        rotation: {x: 0, y: 0, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -50, y: groundThickness / 2, z: -99},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -99, y: groundThickness / 2, z: 91},
+        rotation: {x: 0, y: Math.PI, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -160, y: groundThickness / 2, z: -11},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -150, y: groundThickness / 2, z: -30},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -130, y: groundThickness / 2, z: -50},
+        rotation: {x: 0, y: 3*Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
+    },
+    {
+        position: {x: -125, y: groundThickness / 2, z: -55},
+        rotation: {x: 0, y: Math.PI/2, z: 0},
+        shadows: {cast: true, receive: true},
+        path: trees1Path
     }
 ];
 
