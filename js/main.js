@@ -1,43 +1,17 @@
 "use strict";
 import * as DEF from './definitions.js'
-import * as DRAW from './draw.js'
 import * as INIT from './initialization.js'
 import * as UTILS from './utilities.js'
 import TWEEN from './lib/tween.esm.js'
 
 
-function main() {
+function main(camera, renderer, scene, objects) {
     //
     // Initialization
     //
-    const renderer = INIT.initRenderer();
-    const camera = INIT.initCamera(DEF.cameraProperties);
-    const scene = INIT.initScene(DEF.sceneProperties);
     const lights = INIT.initLights(scene, DEF.lightsProperties);
     const cameraControls = INIT.initCameraControls(camera, renderer, DEF.cameraProperties.target);
     const playListener = INIT.initPlayListener(camera, renderer, cameraControls);
-    const audioLoader = INIT.initAudio(camera, DEF.audioProperties.path);
-
-    //
-    // Meshes drawing
-    //
-    const benches = DRAW.drawBenches(scene, DEF.benchesProperties);
-    const trees = DRAW.drawTrees(scene, DEF.treesProperties);
-    const fishes = DRAW.drawFishes(scene, DEF.fishesProperties);
-    const field = DRAW.drawField(scene, DEF.fieldProperties);
-    const sun = DRAW.drawSun(scene, DEF.sunProperties);
-    const robot = DRAW.drawRobot(scene, DEF.robotProperties);
-    const fishingPole = DRAW.drawFishingPole(scene, DEF.fishingPoleProperties); 
-    const nature = DRAW.drawNature(scene, DEF.natureProperties);
-
-    //
-    // Struct with the main objects
-    //
-    const objects = {
-        robot: robot,
-        fishingPole: fishingPole,
-        fishes: fishes
-    };
 
     //
     // Set the listener for the robot animation
@@ -68,4 +42,5 @@ function main() {
     requestAnimationFrame(render);
 }
 
-main();
+
+export {main}
