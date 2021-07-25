@@ -1,2 +1,3 @@
 # Cyber-Fishing
-WORK IN PROGRESS
+
+[Play Cyber-Fishing](https://sapienzainteractivegraphicscourse.github.io/final-project-dmg-team/)
