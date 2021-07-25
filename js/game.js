@@ -3,8 +3,16 @@ import * as ANIMA from './animations.js'
 import * as INIT from './initialization.js'
 
 
-function restartPlay(camera, renderer) {
+function restartPlay(scene, camera, renderer, objects) {
     points = 0;
+    if (fishesTaken > 0) {  // Reload fishes
+        for (var i=0; i<objects.fishes.length; i++) {
+            scene.remove(scene.getObjectByName(objects.fishes[i].name));
+        }
+        for (var i=0; i<objects.fishes.length; i++) {
+            scene.add(objects.fishes[i]);
+        }
+    }
     fishesTaken = 0;
     document.getElementById("gameStarted").innerHTML = 'false';
     document.getElementById("End_Menu").style.display = 'block';
@@ -101,7 +109,7 @@ function play(scene, camera, renderer, key, objects, objectsTweens, constraintsR
                         if (fishesTaken == fishes.length) {
                             console.log("YOU WIN");
                             document.getElementById("win_div").style.display = 'block';
-                            restartPlay(camera, renderer);
+                            restartPlay(scene, camera, renderer, objects);
                         }
                     }
                     else {
@@ -109,7 +117,7 @@ function play(scene, camera, renderer, key, objects, objectsTweens, constraintsR
                         if (points == -10) {
                             console.log("YOU LOSE");
                             document.getElementById("lose_div").style.display = 'block';
-                            restartPlay(camera, renderer);
+                            restartPlay(scene, camera, renderer, objects);
                         }
                     }
                     document.getElementById("score").innerHTML = points;
