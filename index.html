@@ -36,12 +36,9 @@
         </div>
         <div id='lose_div' class=lose-menu>
             <p>YOU LOSE</p>
-            <p>Fishing is not funny</p>
-            <p>(Pro tip: Don't hold the SpaceBar)</p>
         </div>
         <div id='win_div' class=win-menu>
             <p>YOU WIN</p>
-            <p>I love fishing</p>
         </div>
         <div id='instructions_div' class=instructions-content>
             <p><b>CONTROLS:</b></p>
@@ -92,6 +89,7 @@
     </body>
     <script>
         const soundPlayer = new Audio('./sounds/nature_audio2.wav');
+        soundPlayer.loop = true;
     </script>
     <script>
         function soundOn() {
