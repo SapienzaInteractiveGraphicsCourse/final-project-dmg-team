@@ -1,13 +1,46 @@
 import * as DEF from './definitions.js'
-import * as THREE from '../three.js-master/build/three.module.js';
 import * as ANIMA from './animations.js'
 import * as GAME from './game.js'
-import {OrbitControls} from '../three.js-master/examples/jsm/controls/OrbitControls.js';
-import TWEEN, { Tween } from './lib/tween.esm.js'
+import * as THREE from './lib/three.js-master/build/three.module.js';
+import {OrbitControls} from './lib/three.js-master/examples/jsm/controls/OrbitControls.js';
+import TWEEN from './lib/tween.esm.js'
 
+
+function initFishingPoleTweens(fishingPole) {
+    //
+    // Obtain actual rotation
+    //
+    let rotation;
+    let scale;
+    fishingPole.traverse(function (child) {
+        if (child.name == 'fishLineJoint')
+            rotation = child.rotation;
+        if (child.name == 'fishLineMain')
+            scale = child.scale;
+    });
+
+    //
+    // Define constraints for the animation
+    //
+    const fishingPoleConstraints = DEF.fishingPoleProperties.fishline.main.constraints;
+
+    //
+    // Define tweens for the fishing pole's joint
+    //
+    const fishingPoleTweens = {
+        forward: {
+            move: new TWEEN.Tween({z: rotation.z}).to({z: fishingPoleConstraints.z[1]}, 1000),
+            scale: new TWEEN.Tween({y: scale.y}).to({y: fishingPoleConstraints.y[1]}, 1000),
+        },
+        backward: {
+            move: new TWEEN.Tween({z: rotation.z}).to({z: fishingPoleConstraints.z[0]}, 1000),
+            scale: new TWEEN.Tween({y: scale.y}).to({y: fishingPoleConstraints.y[0]}, 1000),
+        }
+    }
+    return fishingPoleTweens
+}
 
 function initRobotTweens(robot) {
-
     //
     // Obtain actual rotation
     //
@@ -45,23 +78,21 @@ function initRobotTweens(robot) {
     const elbowConstraints = DEF.robotProperties.joints.arm.elbow.constraints;
 
     //
-    // Define 4 tweens for each joint of the robot
+    // Define tweens for the joints of the robot
     //
     const forwardTween = {
         ankle: new TWEEN.Tween({z: rotations.ankle.z}).to({z: ankleConstraints.z[1]}, 1000),
         knee: new TWEEN.Tween({z: rotations.knee.z}).to({z: kneeConstraints.z[1]}, 1000),
         hip: new TWEEN.Tween({z: rotations.hip.z}).to({z: hipConstraints.z[1]}, 1000),
         neck: new TWEEN.Tween({z: rotations.neck.z}).to({z: neckConstraints.z[1]}, 1000),
-        shoulder: new TWEEN.Tween({z: rotations.shoulder.z}).to({z: shoulderConstraints.z[1]}, 1000),
-        elbow: new TWEEN.Tween({z: rotations.elbow.z}).to({z: elbowConstraints.z[1]}, 1000),
+        shoulder: new TWEEN.Tween({y: rotations.shoulder.y}).to({y: shoulderConstraints.y[1]}, 1000),
     }
     const backwardTween = {
         ankle: new TWEEN.Tween({z: rotations.ankle.z}).to({z: ankleConstraints.z[0]}, 1000),
         knee: new TWEEN.Tween({z: rotations.knee.z}).to({z: kneeConstraints.z[0]}, 1000),
         hip: new TWEEN.Tween({z: rotations.hip.z}).to({z: hipConstraints.z[0]}, 1000),
         neck: new TWEEN.Tween({z: rotations.neck.z}).to({z: neckConstraints.z[0]}, 1000),
-        shoulder: new TWEEN.Tween({z: rotations.shoulder.z}).to({z: shoulderConstraints.z[0]}, 1000),
-        elbow: new TWEEN.Tween({z: rotations.elbow.z}).to({z: elbowConstraints.z[0]}, 1000),
+        shoulder: new TWEEN.Tween({y: rotations.shoulder.y}).to({y: shoulderConstraints.y[0]}, 1000),
     }
     const leftwardTween = {
         ankle: new TWEEN.Tween({y: rotations.ankle.y}).to({y: ankleConstraints.y[1]}, 1000),
@@ -69,7 +100,6 @@ function initRobotTweens(robot) {
         hip: new TWEEN.Tween({y: rotations.hip.y}).to({y: hipConstraints.y[1]}, 1000),
         neck: new TWEEN.Tween({y: rotations.neck.y}).to({y: neckConstraints.y[1]}, 1000),
         shoulder: new TWEEN.Tween({y: rotations.shoulder.y}).to({y: shoulderConstraints.y[1]}, 1000),
-        elbow: new TWEEN.Tween({y: rotations.elbow.y}).to({y: elbowConstraints.y[1]}, 1000),
     }
     const rightwardTween = {
         ankle: new TWEEN.Tween({y: rotations.ankle.y}).to({y: ankleConstraints.y[0]}, 1000),
@@ -77,9 +107,11 @@ function initRobotTweens(robot) {
         hip: new TWEEN.Tween({y: rotations.hip.y}).to({y: hipConstraints.y[0]}, 1000),
         neck: new TWEEN.Tween({y: rotations.neck.y}).to({y: neckConstraints.y[0]}, 1000),
         shoulder: new TWEEN.Tween({y: rotations.shoulder.y}).to({y: shoulderConstraints.y[0]}, 1000),
-        elbow: new TWEEN.Tween({y: rotations.elbow.y}).to({y: elbowConstraints.y[0]}, 1000),
     }
-    const catchTween = new TWEEN.Tween();
+    const catchTween = {
+        forward: new TWEEN.Tween({x: rotations.elbow.x}).to({x: elbowConstraints.x[1]}, 500),
+        backward: new TWEEN.Tween({x: rotations.elbow.x}).to({x: elbowConstraints.x[0]}, 800)
+    }
     const robotTweens = {
         movement: {
             forward: forwardTween, 
@@ -92,8 +124,13 @@ function initRobotTweens(robot) {
     return robotTweens
 }
 
-function initKeyListener(scene, objects) {
+function initKeyListener(scene, camera, renderer, objects) {
     let robotTweens = initRobotTweens(objects.robot);
+    let fishingPoleTweens = initFishingPoleTweens(objects.fishingPole);
+    let objectsTweens = {
+        robot: robotTweens,
+        fishingPole: fishingPoleTweens
+    };
     let constraintsReached = {
         forward: {
             ankle: false,
@@ -101,7 +138,8 @@ function initKeyListener(scene, objects) {
             hip: false,
             neck: false,
             shoulder: false,
-            elbow: true
+            elbow: true,
+            fishLineJoint: true,
         },
         backward: {
             ankle: true,
@@ -109,7 +147,8 @@ function initKeyListener(scene, objects) {
             hip: false,
             neck: false,
             shoulder: false,
-            elbow: false
+            elbow: false,
+            fishLineJoint: false,
         },
         leftward: {
             ankle: false,
@@ -117,7 +156,8 @@ function initKeyListener(scene, objects) {
             hip: true,
             neck: false,
             shoulder: false,
-            elbow: false
+            elbow: false,
+            fishLineJoint: false
         },
         rightward: {
             ankle: false,
@@ -125,19 +165,26 @@ function initKeyListener(scene, objects) {
             hip: true,
             neck: false,
             shoulder: false,
-            elbow: false
+            elbow: false,
+            fishLineJoint: false
         }
     };
     document.onkeydown = function(key) {
-        GAME.play(scene, key, objects, robotTweens.movement, constraintsReached);
+        GAME.play(scene, camera, renderer, key, objects, objectsTweens, constraintsReached);
     };
     document.onkeyup = function() {
-        Object.keys(robotTweens.movement).forEach(function(dirTween) {
-            Object.keys(robotTweens.movement[dirTween]).forEach(function(tween) {
-                robotTweens.movement[dirTween][tween].stop();
+        Object.keys(objectsTweens.robot.movement).forEach(function(dirTween) {
+            Object.keys(objectsTweens.robot.movement[dirTween]).forEach(function(tween) {
+                objectsTweens.robot.movement[dirTween][tween].stop();
             });
         });
-        robotTweens = initRobotTweens(objects.robot);
+        Object.keys(objectsTweens.fishingPole).forEach(function(dirTween) {
+            Object.keys(objectsTweens.fishingPole[dirTween]).forEach(function(tween) {
+                objectsTweens.fishingPole[dirTween][tween].stop();
+            });
+        });
+        objectsTweens.fishingPole = initFishingPoleTweens(objects.fishingPole);
+        objectsTweens.robot = initRobotTweens(objects.robot);
     }
     return null
 }
@@ -145,6 +192,11 @@ function initKeyListener(scene, objects) {
 function initPlayListener(camera, renderer, cameraControls) {
     document.getElementById("Play_Button").addEventListener("click", function(){ANIMA.startCameraAnimation(camera, renderer)});
     cameraControls.enabled = false;
+    return null
+}
+
+function initRestartListener(camera, renderer, cameraControls) {
+    document.getElementById("Restart_Button").addEventListener("click", function(){ANIMA.startCameraAnimation(camera, renderer)});
     return null
 }
 
@@ -246,4 +298,4 @@ function initCameraControls(camera, renderer, cameraTarget) {
 }
 
 
-export {initRenderer, initCamera, initScene, initLights, initCameraControls, initKeyListener, initPlayListener}
+export {initRenderer, initCamera, initScene, initLights, initCameraControls, initKeyListener, initPlayListener, initRestartListener}
