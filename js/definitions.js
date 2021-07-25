@@ -822,8 +822,8 @@ const jointsProperties = {
         ankle: {
             constraints: {
                 x: [0, 0], 
-                y: [-Math.PI/2, Math.PI/2],                     // REMEMBER TO ADJUST THE ROTATIONS IN ORDER TO HAVE POSITIVE ROTATION FORWARD
-                z: [0.13, -Math.PI/4]
+                y: [-Math.PI/2.6, Math.PI/2.6],                     // REMEMBER TO ADJUST THE ROTATIONS IN ORDER TO HAVE POSITIVE ROTATION FORWARD
+                z: [-0.13, -Math.PI/3]
             },
             size: {
                 radius: shpereJointRadius,
@@ -855,7 +855,7 @@ const jointsProperties = {
             constraints: {
                 x: [0, 0], 
                 y: [0, 0],
-                z: [2.07, Math.PI]
+                z: [2.07, 0]
             },
             size: {
                 radius: shpereJointRadius * 0.8,
@@ -887,7 +887,7 @@ const jointsProperties = {
             constraints: {
                 x: [0, 0], 
                 y: [0, 0],
-                z: [-Math.PI/2, Math.PI/2]
+                z: [-3*Math.PI/5, 0]
             },
             size: {
                 radius: shpereJointRadius,
@@ -919,7 +919,7 @@ const jointsProperties = {
             constraints: {
                 x: [-Math.PI/2, Math.PI/2], 
                 y: [-Math.PI/2, Math.PI/2],
-                z: [-Math.PI/2, Math.PI/2]
+                z: [0, Math.PI/4]
             },
             size: {
                 radius: shpereJointRadius * 0.9,
@@ -952,7 +952,7 @@ const jointsProperties = {
         shoulder: {
             constraints: {
                 x: [0, 0],
-                y: [-Math.PI/3, Math.PI/2],
+                y: [Math.PI/3, Math.PI/2.8],
                 z: [-Math.PI/2, Math.PI/2]
             },
             size: {
@@ -985,8 +985,8 @@ const jointsProperties = {
         },
         elbow: {
             constraints: {
-                x: [0, 0],
-                y: [-Math.PI/3, Math.PI/2],
+                x: [-Math.PI/3, 0],
+                y: [0, 0],
                 z: [-3*Math.PI/2, 0]
             },
             size: {
@@ -1049,9 +1049,9 @@ const poleRotation = {
     z: - Math.PI / 4
 };
 const reelColor = 0xa6ff00;
-const floatingRadius = 0.3;
+const floatingRadius = 0.5;
 const floatingColor = 0xffa200;
-const fishLineLenght = 45;
+const fishLineLenght = 15;
 const fishLineColor = 0xedf6f4;
 const fishLineRadius = 0.04;
 const fishingPoleProperties = {
@@ -1117,6 +1117,11 @@ const fishingPoleProperties = {
     },
     fishline: {
         main: {
+            constraints: {
+                x: [0, 0],
+                y: [6.5, 1],                  // Scale
+                z: [Math.PI/7, Math.PI/2]   // Move
+            },
             size: {
                 radiusTop: fishLineRadius,
                 radiusBottom: fishLineRadius,
@@ -1149,7 +1154,7 @@ const fishingPoleProperties = {
             size: {
                 radiusTop: fishLineRadius,
                 radiusBottom: fishLineRadius,
-                height: fishLineLenght,
+                height: fishLineLenght / 2,
                 radialDivisions: 8,
                 heightDivisions: 4
             },
