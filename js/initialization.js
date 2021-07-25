@@ -314,4 +314,4 @@ function initCameraControls(camera, renderer, cameraTarget) {
 }
 
 
-export {initAudio, initRenderer, initCamera, initScene, initLights, initCameraControls, initKeyListener, initPlayListener, initRestartListener}
+export {initRenderer, initCamera, initScene, initLights, initCameraControls, initKeyListener, initPlayListener, initRestartListener}
