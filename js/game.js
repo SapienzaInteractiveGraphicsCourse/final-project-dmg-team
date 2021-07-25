@@ -10,10 +10,10 @@ let points = 0;
 function restartPlay(scene, camera, renderer, objects, copiedFishes) {
     points = 0;
     if (fishesTaken > 0) {  // Reload fishes
-        for (var i=0; i<objects.fishes.length; i++) {
+        for (let i=0; i<objects.fishes.length; i++) {
             scene.remove(scene.getObjectByName(objects.fishes[i].name));
         }
-        for (var i=0; i<objects.fishes.length; i++) {
+        for (let i=0; i<objects.fishes.length; i++) {
             scene.add(objects.fishes[i]);
         }
     }
