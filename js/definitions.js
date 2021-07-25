@@ -295,10 +295,6 @@ const fieldProperties = {
         flowSpeed: 0,
         scale: 1,
         type: 'plane'
-    },
-    texture: {
-        image: fieldMap,
-        normalMap: fieldNormalMap
     }
 }
 
