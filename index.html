@@ -19,6 +19,26 @@
                 </li>
             </ul>
         </nav>
+        <nav id='End_Menu'>
+            <ul>
+                <li>
+                    <button id='Restart_Button' class='rstrtbtn' onclick="StartPlay()">New Game</button>
+                </li>
+            </ul>
+        </nav>
+        <div id='score_div' class=score-menu>
+            <p>score</p>
+            <h2 id='score'>0</h2>
+        </div>
+        <div id='lose_div' class=lose-menu>
+            <p>YOU LOSE</p>
+            <p>Fishing is not funny</p>
+            <p>(Pro tip: Don't hold the SpaceBar)</p>
+        </div>
+        <div id='win_div' class=win-menu>
+            <p>YOU WIN</p>
+            <p>I love fishing</p>
+        </div>
         <div id='instructions_div' class=instructions-content>
             <p><b>CONTROLS:</b></p>
             <p>W: Move forward</p>
@@ -34,11 +54,16 @@
             <p>  Otherwise, -1 point.</p>
             <p><b>END:</b></p>
             <p>- You win when the lake is void</p>
-            <p>- You lose when you reach -4 points</p>
+            <p>- You lose when you reach -10 points</p>
         </div>
         <script>
             function StartPlay() {
                 document.getElementById("Start_Menu").style.display = 'none';
+            }
+        </script>
+        <script>
+            function RestartPlay() {
+                document.getElementById("End_Menu").style.display = 'none';
             }
         </script>
         <script>
@@ -61,6 +86,11 @@
             } 
         </script>
     </body>
+    <script>
+        document.getElementById("End_Menu").style.display = 'none';
+        document.getElementById("lose_div").style.display = 'none';
+        document.getElementById("win_div").style.display = 'none';
+    </script>
     <script src="./js/initialization.js" type="module"></script>
     <script src="./js/definitions.js" type="module"></script>
     <script src="./js/utilities.js" type="module"></script>
