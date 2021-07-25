@@ -1,7 +1,7 @@
 import * as DEF from './definitions.js'
-import * as THREE from '../three.js-master/build/three.module.js';
-import {OBJLoader} from '../three.js-master/examples/jsm/loaders/OBJLoader.js';
-import {MTLLoader} from '../three.js-master/examples/jsm/loaders/MTLLoader.js';
+import * as THREE from './lib/three.js-master/build/three.module.js';
+import {OBJLoader} from './lib/three.js-master/examples/jsm/loaders/OBJLoader.js';
+import {MTLLoader} from './lib/three.js-master/examples/jsm/loaders/MTLLoader.js';
 
 
 // _________________ Display _________________ //
