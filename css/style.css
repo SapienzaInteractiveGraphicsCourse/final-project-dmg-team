@@ -77,6 +77,7 @@ nav ul li button:hover {
 
 .sound-menu button {
   color: rgba(0, 0, 0, 0.472);
+  background-color: rgba(255, 255, 255, 0.472);
   padding: 1px 20px;
   font-size: 15px;
   text-decoration: none;
