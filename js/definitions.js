@@ -298,7 +298,7 @@ const fieldProperties = {
     },
     texture: {
         image: fieldMap,
-        normalMap: fieldNormalMap'
+        normalMap: fieldNormalMap
     }
 }
 
