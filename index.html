@@ -27,7 +27,8 @@
             </ul>
         </nav>
         <div id='sound_div' class=sound-menu>
-            <button id='Sound_On' class='soundbtn' onclick="soundOn()">Sound On</button>
+            <button id='Sound_On' class='soundbtn' onclick="soundOn()">Sound On/Off</button>
+            <h2 id='soundon' hidden>false</h2>
         </div>
         <div id='score_div' class=score-menu>
             <p>score</p>
@@ -90,9 +91,20 @@
         </script>
     </body>
     <script>
+        const soundPlayer = new Audio('./sounds/nature_audio2.wav');
+    </script>
+    <script>
         function soundOn() {
-            const soundPlayer = new Audio('./sounds/nature_audio2.wav');
-            soundPlayer.play();
+            const soundon = document.getElementById("soundon").innerHTML;
+            if (soundon == 'false') {
+                document.getElementById("soundon").innerHTML = 'true';
+                soundPlayer.play();
+            }
+            else {
+                document.getElementById("soundon").innerHTML = 'false';
+                soundPlayer.pause();
+                soundPlayer.currentTime = 0;
+            }
         }
     </script>
     <script>
