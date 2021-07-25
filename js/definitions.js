@@ -305,12 +305,12 @@ const fieldProperties = {
 /* ------------------ Trees ------------------ */
 
 const trees1Path = {
-    mtl: './objects/trees/Voxel_Tree_1.mtl',
-    obj: './objects/trees/Voxel_Tree_1.obj'
+    mtl: '../objects/trees/Voxel_Tree_1.mtl',
+    obj: '../objects/trees/Voxel_Tree_1.obj'
 };
 const trees2Path = {
-    mtl: './objects/trees/Voxel_Tree_2.mtl',
-    obj: './objects/trees/Voxel_Tree_2.obj'
+    mtl: '../objects/trees/Voxel_Tree_2.mtl',
+    obj: '../objects/trees/Voxel_Tree_2.obj'
 };
 const treesProperties = [
     {
@@ -360,8 +360,8 @@ const treesProperties = [
 /* ----------------- Benches ----------------- */
 
 const benchPath = {
-    mtl: './objects/benches/bench.mtl',
-    obj: './objects/benches/bench.obj'
+    mtl: '../objects/benches/bench.mtl',
+    obj: '../objects/benches/bench.obj'
 };
 const benchesProperties = [
     {
@@ -399,8 +399,8 @@ const benchesProperties = [
 /* ----------------- Fishes ----------------- */
 
 const fishPath = {
-    mtl: './objects/fishes/fish.mtl',
-    obj: './objects/fishes/fish.obj'
+    mtl: '../objects/fishes/fish.mtl',
+    obj: '../objects/fishes/fish.obj'
 };
 const fishesProperties = [
     {
@@ -1242,78 +1242,78 @@ const fishingPoleProperties = {
 
 const bigRocksPath = [
     {
-        mtl: './objects/nature/rocks/bigRock1.mtl',
-        obj: './objects/nature/rocks/bigRock1.obj'
+        mtl: '../objects/nature/rocks/bigRock1.mtl',
+        obj: '../objects/nature/rocks/bigRock1.obj'
     },
     {
-        mtl: './objects/nature/rocks/bigRock2.mtl',
-        obj: './objects/nature/rocks/bigRock2.obj'
+        mtl: '../objects/nature/rocks/bigRock2.mtl',
+        obj: '../objects/nature/rocks/bigRock2.obj'
     },
     {
-        mtl: './objects/nature/rocks/bigRock3.mtl',
-        obj: './objects/nature/rocks/bigRock3.obj'
+        mtl: '../objects/nature/rocks/bigRock3.mtl',
+        obj: '../objects/nature/rocks/bigRock3.obj'
     }
 ];
 const flatRocksPath = [
     {
-        mtl: './objects/nature/rocks/flatRock1.mtl',
-        obj: './objects/nature/rocks/flatRock1.obj'
+        mtl: '../objects/nature/rocks/flatRock1.mtl',
+        obj: '../objects/nature/rocks/flatRock1.obj'
     },
     {
-        mtl: './objects/nature/rocks/flatRock2.mtl',
-        obj: './objects/nature/rocks/flatRock2.obj'
+        mtl: '../objects/nature/rocks/flatRock2.mtl',
+        obj: '../objects/nature/rocks/flatRock2.obj'
     },
     {
-        mtl: './objects/nature/rocks/flatRock3.mtl',
-        obj: './objects/nature/rocks/flatRock3.obj'
+        mtl: '../objects/nature/rocks/flatRock3.mtl',
+        obj: '../objects/nature/rocks/flatRock3.obj'
     },
     {
-        mtl: './objects/nature/rocks/flatRock4.mtl',
-        obj: './objects/nature/rocks/flatRock4.obj'
+        mtl: '../objects/nature/rocks/flatRock4.mtl',
+        obj: '../objects/nature/rocks/flatRock4.obj'
     },
     {
-        mtl: './objects/nature/rocks/flatRock5.mtl',
-        obj: './objects/nature/rocks/flatRock5.obj'
+        mtl: '../objects/nature/rocks/flatRock5.mtl',
+        obj: '../objects/nature/rocks/flatRock5.obj'
     }
 ];
 const rocksPath = [
     {
-        mtl: './objects/nature/rocks/rock1.mtl',
-        obj: './objects/nature/rocks/rock1.obj'
+        mtl: '../objects/nature/rocks/rock1.mtl',
+        obj: '../objects/nature/rocks/rock1.obj'
     },
     {
-        mtl: './objects/nature/rocks/rock2.mtl',
-        obj: './objects/nature/rocks/rock2.obj'
+        mtl: '../objects/nature/rocks/rock2.mtl',
+        obj: '../objects/nature/rocks/rock2.obj'
     },
     {
-        mtl: './objects/nature/rocks/rock3.mtl',
-        obj: './objects/nature/rocks/rock3.obj'
+        mtl: '../objects/nature/rocks/rock3.mtl',
+        obj: '../objects/nature/rocks/rock3.obj'
     },
     {
-        mtl: './objects/nature/rocks/rock4.mtl',
-        obj: './objects/nature/rocks/rock4.obj'
+        mtl: '../objects/nature/rocks/rock4.mtl',
+        obj: '../objects/nature/rocks/rock4.obj'
     },
     {
-        mtl: './objects/nature/rocks/rock5.mtl',
-        obj: './objects/nature/rocks/rock5.obj'
+        mtl: '../objects/nature/rocks/rock5.mtl',
+        obj: '../objects/nature/rocks/rock5.obj'
     }
 ];
 const smallRocksPath = [
     {
-        mtl: './objects/nature/rocks/smallRock1.mtl',
-        obj: './objects/nature/rocks/smallRock1.obj'
+        mtl: '../objects/nature/rocks/smallRock1.mtl',
+        obj: '../objects/nature/rocks/smallRock1.obj'
     },
     {
-        mtl: './objects/nature/rocks/smallRock2.mtl',
-        obj: './objects/nature/rocks/smallRock2.obj'
+        mtl: '../objects/nature/rocks/smallRock2.mtl',
+        obj: '../objects/nature/rocks/smallRock2.obj'
     },
     {
-        mtl: './objects/nature/rocks/smallRock3.mtl',
-        obj: './objects/nature/rocks/smallRock3.obj'
+        mtl: '../objects/nature/rocks/smallRock3.mtl',
+        obj: '../objects/nature/rocks/smallRock3.obj'
     },
     {
-        mtl: './objects/nature/rocks/smallRock4.mtl',
-        obj: './objects/nature/rocks/smallRock4.obj'
+        mtl: '../objects/nature/rocks/smallRock4.mtl',
+        obj: '../objects/nature/rocks/smallRock4.obj'
     }
 ];
 const rocksProperties = [
