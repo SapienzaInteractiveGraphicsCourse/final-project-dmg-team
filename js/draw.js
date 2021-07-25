@@ -1,44 +1,65 @@
 "use strict";
+import * as DEF from './definitions.js'
 import * as UTILS from './utilities.js'
 import * as THREE from './lib/three.js-master/build/three.module.js';
 import * as ANIMA from './animations.js'
 import {Water} from './lib/three.js-master/examples/jsm/objects/Water2.js';
 
 
-function drawTrees(scene, treesProperties) {                // FIND A WAY TO MAKE INSTANCES INSTEAD OF CREATE DIFFERENT OBJECTS
+function drawAll(LoadingManager, scene) {
+    const benches = drawBenches(LoadingManager, scene, DEF.benchesProperties);
+    const trees = drawTrees(LoadingManager, scene, DEF.treesProperties);
+    const fishes = drawFishes(LoadingManager, scene, DEF.fishesProperties);
+    const field = drawField(LoadingManager, scene, DEF.fieldProperties);
+    const sun = drawSun(LoadingManager, scene, DEF.sunProperties);
+    const robot = drawRobot(LoadingManager, scene, DEF.robotProperties);
+    const fishingPole = drawFishingPole(LoadingManager, scene, DEF.fishingPoleProperties); 
+    const nature = drawNature(LoadingManager, scene, DEF.natureProperties);
+    return {
+        benches: benches,
+        trees: trees,
+        fishes: fishes,
+        field: field,
+        sun: sun,
+        robot: robot,
+        fishingPole
+    }
+}
+
+function drawTrees(LoadingManager, scene, treesProperties) {                // FIND A WAY TO MAKE INSTANCES INSTEAD OF CREATE DIFFERENT OBJECTS
     const trees = [];
     treesProperties.forEach(treeProperties => {
-        const tree = UTILS.createObject(treeProperties);
+        const tree = UTILS.createObject(LoadingManager, treeProperties);
         trees.push(tree);
         scene.add(tree);
     });
     return trees
 }
 
-function drawBenches(scene, benchesProperties) {
+function drawBenches(LoadingManager, scene, benchesProperties) {
     const benches = [];
     benchesProperties.forEach(benchProperties => {
-        const bench = UTILS.createObject(benchProperties);
+        const bench = UTILS.createObject(LoadingManager, benchProperties);
         benches.push(bench);
         scene.add(bench);
     });
     return benches
 }
 
-function drawRocks(scene, rocksProperties) {
+function drawRocks(LoadingManager, scene, rocksProperties) {
     const rocks = [];
     rocksProperties.forEach(rockProperties => {
-        const rock = UTILS.createObject(rockProperties);
+        const rock = UTILS.createObject(LoadingManager, rockProperties);
         rocks.push(rock);
         scene.add(rock);
     });
     return rocks
 }
 
-function drawFishes(scene, fishesProperties) {
+function drawFishes(LoadingManager, scene, fishesProperties) {
     const fishes = [];
     for (let i=0; i<fishesProperties.length; i++) {
-        const fish = UTILS.createObject(fishesProperties[i]);
+        const fish = UTILS.createObject(LoadingManager, fishesProperties[i]);
         const name = 'fish' + i.toString();
         fish.name = name;
         fishes.push(fish);
@@ -48,7 +69,7 @@ function drawFishes(scene, fishesProperties) {
     return fishes
 }
     
-function drawRobot(scene, robotProperties) {
+function drawRobot(LoadingManager, scene, robotProperties) {
 
     // Define main properties
     const robot = new THREE.Group();
@@ -153,7 +174,7 @@ function drawRobot(scene, robotProperties) {
     return robot
 }
 
-function drawFishingPole(scene, fishingPoleProperties) {
+function drawFishingPole(LoadingManager, scene, fishingPoleProperties) {
 
     // Create the meshes
     const fishingPole = new THREE.Group();
@@ -194,13 +215,13 @@ function drawFishingPole(scene, fishingPoleProperties) {
     return fishingPole
 }
 
-function drawSun(scene, sunProperties) {
+function drawSun(LoadingManager, scene, sunProperties) {
     const sun = UTILS.createMesh(sunProperties, 'basic');
     scene.add(sun);
     return sun
 }
 
-function drawWater(scene, waterProperties) {
+function drawWater(LoadingManager, scene, waterProperties) {
     const waterGeometry = UTILS.createGeometry(waterProperties.type, waterProperties.size);
     const water = new Water(waterGeometry, {
         color: waterProperties.color,
@@ -221,7 +242,7 @@ function drawWater(scene, waterProperties) {
     return water
 }
 
-function drawField(scene, fieldProperties) {
+function drawField(LoadingManager, scene, fieldProperties) {
     const field = new THREE.Object3D();
     const largeboxMesh = UTILS.createMesh(
         fieldProperties.meshes.boxes.large, null);
@@ -235,7 +256,7 @@ function drawField(scene, fieldProperties) {
     largeplaneMesh.material.side = THREE.DoubleSide;
     smallplaneMesh.material.side = THREE.DoubleSide;
 
-    const water = drawWater(scene, fieldProperties.water);
+    const water = drawWater(LoadingManager, scene, fieldProperties.water);
 
     field.add(largeboxMesh, smallboxMesh1, smallboxMesh2, largeplaneMesh, smallplaneMesh, water);
     scene.add(field);
@@ -246,13 +267,14 @@ function drawField(scene, fieldProperties) {
     }
 }
 
-function drawNature(scene, natureProperties) {
-    const rocks = drawRocks(scene, natureProperties.rocks);
+function drawNature(LoadingManager, scene, natureProperties) {
+    const rocks = drawRocks(LoadingManager, scene, natureProperties.rocks);
     return {
         rocks: rocks
     }
 }
 
 
-export {drawTrees, drawBenches, drawFishes, drawSun, drawWater, drawField, drawNature, 
+export {drawAll,
+        drawTrees, drawBenches, drawFishes, drawSun, drawWater, drawField, drawNature, 
         drawRobot, drawFishingPole};
