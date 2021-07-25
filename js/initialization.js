@@ -6,6 +6,22 @@ import {OrbitControls} from './lib/three.js-master/examples/jsm/controls/OrbitCo
 import TWEEN from './lib/tween.esm.js'
 
 
+function initAudio(camera, audio_path) {
+    const audioListener = new THREE.AudioListener();
+    camera.add(audioListener);
+
+    const sound = new THREE.Audio(audioListener);
+    const audioLoader = new THREE.AudioLoader();
+    audioLoader.load(audio_path, function(buffer) {
+        sound.setBuffer(buffer);
+        sound.setLoop(true);
+        sound.setVolume(0.5);
+        sound.play();
+    });
+
+    return audioLoader
+}
+
 function initFishingPoleTweens(fishingPole) {
     //
     // Obtain actual rotation
@@ -298,4 +314,4 @@ function initCameraControls(camera, renderer, cameraTarget) {
 }
 
 
-export {initRenderer, initCamera, initScene, initLights, initCameraControls, initKeyListener, initPlayListener, initRestartListener}
+export {initAudio, initRenderer, initCamera, initScene, initLights, initCameraControls, initKeyListener, initPlayListener, initRestartListener}
